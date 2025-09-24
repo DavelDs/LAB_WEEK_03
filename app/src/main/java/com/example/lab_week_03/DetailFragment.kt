@@ -1,6 +1,7 @@
 package com.example.lab_week_03
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,48 +10,55 @@ import androidx.fragment.app.Fragment
 
 class DetailFragment : Fragment() {
 
-    private var coffeeTitle: TextView? = null
-    private var coffeeDesc: TextView? = null
+    private lateinit var coffeeTitle: TextView
+    private lateinit var coffeeDesc: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // ✅ Cocokkan dengan ID dari XML (coffee_title dan coffee_desc)
+
         coffeeTitle = view.findViewById(R.id.coffee_title)
         coffeeDesc = view.findViewById(R.id.coffee_desc)
+
+        val coffeeId = arguments?.getInt(COFFEE_ID, 0) ?: 0
+        Log.d("DetailFragment", "Received coffeeId = $coffeeId")
+
+        setCoffeeData(coffeeId)
     }
 
-    fun setCoffeeData(id: Int) {
+    private fun setCoffeeData(id: Int) {
         when (id) {
             R.id.affogato -> {
-                coffeeTitle?.text = getString(R.string.affogato_title)
-                coffeeDesc?.text = getString(R.string.affogato_desc)
+                coffeeTitle.text = getString(R.string.affogato_title)
+                coffeeDesc.text = getString(R.string.affogato_desc)
             }
             R.id.americano -> {
-                coffeeTitle?.text = getString(R.string.americano_title)
-                coffeeDesc?.text = getString(R.string.americano_desc)
+                coffeeTitle.text = getString(R.string.americano_title)
+                coffeeDesc.text = getString(R.string.americano_desc)
             }
             R.id.latte -> {
-                coffeeTitle?.text = getString(R.string.latte_title)
-                coffeeDesc?.text = getString(R.string.latte_desc)
+                coffeeTitle.text = getString(R.string.latte_title)
+                coffeeDesc.text = getString(R.string.latte_desc)
+            }
+            else -> {
+                coffeeTitle.text = "Tidak ada data"
+                coffeeDesc.text = "ID: $id tidak dikenali"
             }
         }
     }
 
     companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        private const val COFFEE_ID = "COFFEE_ID"
+        fun newInstance(coffeeId: Int) =
             DetailFragment().apply {
                 arguments = Bundle().apply {
-                    putString("param1", param1)
-                    putString("param2", param2)
+                    putInt(COFFEE_ID, coffeeId)
                 }
             }
     }
