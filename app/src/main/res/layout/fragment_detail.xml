@@ -7,18 +7,29 @@
     android:orientation="vertical"
     android:padding="20dp"
     tools:context=".DetailFragment">
+
+    <!-- Back Button -->
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back to List" />
+
     <TextView
         android:id="@+id/coffee_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textStyle="bold"
-        tools:text="@string/affogato_title"/>
+        android:layout_marginTop="16dp"
+        tools:text="@string/affogato_title" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginVertical="20dp"
         android:background="?android:attr/dividerVertical" />
+
     <TextView
         android:id="@+id/coffee_desc"
         android:layout_width="match_parent"

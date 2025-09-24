@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 
@@ -12,6 +13,7 @@ class DetailFragment : Fragment() {
 
     private lateinit var coffeeTitle: TextView
     private lateinit var coffeeDesc: TextView
+    private lateinit var backButton: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,11 +27,14 @@ class DetailFragment : Fragment() {
 
         coffeeTitle = view.findViewById(R.id.coffee_title)
         coffeeDesc = view.findViewById(R.id.coffee_desc)
-
+        backButton = view.findViewById(R.id.back_button)
         val coffeeId = arguments?.getInt(COFFEE_ID, 0) ?: 0
         Log.d("DetailFragment", "Received coffeeId = $coffeeId")
 
         setCoffeeData(coffeeId)
+        backButton.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
     }
 
     private fun setCoffeeData(id: Int) {
@@ -46,6 +51,14 @@ class DetailFragment : Fragment() {
                 coffeeTitle.text = getString(R.string.latte_title)
                 coffeeDesc.text = getString(R.string.latte_desc)
             }
+            R.id.cappuccino -> {
+                coffeeTitle.text = getString(R.string.cappuccino_title)
+                coffeeDesc.text = getString(R.string.cappuccino_desc)
+            }
+            R.id.mocha -> {
+                coffeeTitle.text = getString(R.string.mocha_title)
+                coffeeDesc.text = getString(R.string.mocha_desc)
+            }
             else -> {
                 coffeeTitle.text = "Tidak ada data"
                 coffeeDesc.text = "ID: $id tidak dikenali"
@@ -55,6 +68,7 @@ class DetailFragment : Fragment() {
 
     companion object {
         private const val COFFEE_ID = "COFFEE_ID"
+
         fun newInstance(coffeeId: Int) =
             DetailFragment().apply {
                 arguments = Bundle().apply {
