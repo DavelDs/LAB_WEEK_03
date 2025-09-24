@@ -18,24 +18,14 @@ class MainActivity : AppCompatActivity(), CoffeeListener {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        if (savedInstanceState == null) {
-            findViewById<FragmentContainerView>(R.id.fragment_container).let { containerLayout ->
-                val listFragment = ListFragment()
-                supportFragmentManager.beginTransaction()
-                    .add(containerLayout.id, listFragment)
-                    .commit()
-            }
-        }
     }
 
-    override fun onSelected(id: Int) {
-        findViewById<FragmentContainerView>(R.id.fragment_container).let { containerLayout ->
-            val detailFragment = DetailFragment.newInstance(id)
-            supportFragmentManager.beginTransaction()
-                .replace(containerLayout.id, detailFragment)
-                .addToBackStack(null)
-                .commit()
-        }
+    // Implementasi CoffeeListener
+    override fun onSelected(coffeeId: Int) {
+        val detailFragment = DetailFragment.newInstance(coffeeId)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, detailFragment)
+            .addToBackStack(null)
+            .commit()
     }
 }
